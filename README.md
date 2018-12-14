@@ -1,12 +1,12 @@
-## Summary
+# Summary
 
 Terraform module to setup AWS ALB with required parameters.
-
 
 Based on Hashicorp's [ALB module](https://github.com/terraform-aws-modules/terraform-aws-alb). In addition can configure S3 bucket to store ALB logs, Route53 record with custom DNS name and setup security group.
 
 ## Example
-```
+
+```HCL
 module "alb" {
   source = "github.com/lean-delivery/tf-module-aws-alb"
 
