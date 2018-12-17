@@ -46,6 +46,8 @@ resource "aws_s3_bucket" "alb-logs" {
 data "aws_region" "current" {}
 
 data "aws_iam_policy_document" "alb-logs-policy" {
+  count = "${ var.enable_logging ? 1 : 0 }"
+
   statement {
     effect = "Allow"
 
@@ -54,7 +56,7 @@ data "aws_iam_policy_document" "alb-logs-policy" {
     ]
 
     resources = [
-      "arn:aws:s3:::${element(aws_s3_bucket.alb-logs.*.id, count.index)}/*",
+      "arn:aws:s3:::${element(concat(aws_s3_bucket.alb-logs.*.id, list("")), 0)}/*",
     ]
 
     principals = {
@@ -68,7 +70,7 @@ resource "aws_s3_bucket_policy" "alb-logs" {
   count  = "${ var.enable_logging ? 1 : 0 }"
   bucket = "${element(aws_s3_bucket.alb-logs.*.id, count.index)}"
 
-  policy = "${data.aws_iam_policy_document.alb-logs-policy.json}"
+  policy = "${data.aws_iam_policy_document.alb-logs-policy.0.json}"
 }
 
 data "aws_acm_certificate" "this" {
@@ -96,7 +98,7 @@ module "alb" {
   target_groups_count = "${var.default_target_groups_count}"
 
   logging_enabled = "${var.enable_logging}"
-  log_bucket_name = "${aws_s3_bucket.alb-logs.0.id}"
+  log_bucket_name = "${element(concat(aws_s3_bucket.alb-logs.*.id, list("")), 0)}"
   tags            = "${merge(local.default_tags, var.tags)}"
 
   target_groups_defaults = "${var.target_groups_defaults}"
