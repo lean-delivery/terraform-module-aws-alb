@@ -37,6 +37,7 @@ module "alb" {
 | environment | Environment name (used for resource naming and tagging) | string | `test` | no |
 | force\_destroy | Enforces destruction of S3 bucket with ALB logs | string | `true` | no |
 | lb\_accout\_id\_per\_region | - | map | `<map>` | no |
+| most\_recent\_certificate | Triger to use most recent SSL certificate | string | `false` | no |
 | project | Project name (used for resource naming and tagging) | string | `project` | no |
 | root\_domain | Root domain in which custom DNS record for ALB would be created | string | `` | no |
 | subnets | A list of subnets to associate with the load balancer | list | - | yes |

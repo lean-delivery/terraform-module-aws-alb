@@ -74,8 +74,9 @@ resource "aws_s3_bucket_policy" "alb-logs" {
 }
 
 data "aws_acm_certificate" "this" {
-  domain   = "${var.acm_cert_domain}"
-  statuses = ["ISSUED", "PENDING_VALIDATION"]
+  domain      = "${var.acm_cert_domain}"
+  statuses    = ["ISSUED", "PENDING_VALIDATION"]
+  most_recent = "${var.most_recent_certificate}"
 }
 
 module "alb" {

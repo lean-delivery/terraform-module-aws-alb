@@ -120,3 +120,8 @@ variable "lb_accout_id_per_region" {
     "cn-northwest-1" = "037604701340"
   }
 }
+
+variable "most_recent_certificate" {
+  description = "Triger to use most recent SSL certificate"
+  default     = "false"
+}
