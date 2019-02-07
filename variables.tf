@@ -22,6 +22,11 @@ variable "enable_logging" {
   description = "Trigger to enable ALB logging"
 }
 
+variable "default_load_balancer_is_internal" {
+  description = "Boolean determining if the load balancer is internal or externally facing."
+  default     = "false"
+}
+
 variable "force_destroy" {
   default     = "true"
   description = "Enforces destruction of S3 bucket with ALB logs"
