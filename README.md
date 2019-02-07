@@ -34,6 +34,7 @@ module "alb" {
 | default\_target\_groups\_count | Switch to default target group | string | `1` | no |
 | default\_target\_groups\_port | Port of default target group | string | `80` | no |
 | enable\_logging | Trigger to enable ALB logging | string | `true` | no |
+| default\_load\_balancer\_is\_internal | Determines if the load balancer is internal or externally facing | string | `false` | no |
 | environment | Environment name (used for resource naming and tagging) | string | `test` | no |
 | force\_destroy | Enforces destruction of S3 bucket with ALB logs | string | `true` | no |
 | lb\_accout\_id\_per\_region | - | map | `<map>` | no |
