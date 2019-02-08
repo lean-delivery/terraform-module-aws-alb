@@ -24,7 +24,7 @@ variable "enable_logging" {
 
 variable "default_load_balancer_is_internal" {
   description = "Boolean determining if the load balancer is internal or externally facing."
-  default     = "false"
+  default     = "true"
 }
 
 variable "force_destroy" {
