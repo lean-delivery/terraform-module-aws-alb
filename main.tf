@@ -83,10 +83,11 @@ module "alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "3.5.0"
 
-  load_balancer_name = "${var.project}-${var.environment}"
-  security_groups    = ["${aws_security_group.allow_in80_in443_outALL.id}"]
-  subnets            = "${var.subnets}"
-  vpc_id             = "${var.vpc_id}"
+  load_balancer_name        = "${var.project}-${var.environment}"
+  load_balancer_is_internal = "${var.default_load_balancer_is_internal}"
+  security_groups           = ["${aws_security_group.allow_in80_in443_outALL.id}"]
+  subnets                   = "${var.subnets}"
+  vpc_id                    = "${var.vpc_id}"
 
   /////// Configure listeners and target groups ///////
   https_listeners       = "${list(map("certificate_arn", "${data.aws_acm_certificate.this.arn}", "port", "${var.default_https_tcp_listeners_port}"))}"
