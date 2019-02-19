@@ -3,6 +3,8 @@ locals {
     Project     = "${var.project}"
     Environment = "${var.environment}"
   }
+
+  get_ssl_cert = "${ lower(var.ssl_certificate_arn) == "none" ? "true" : "false" }"
 }
 
 resource "aws_security_group" "allow_in80_in443_outALL" {
@@ -74,7 +76,7 @@ resource "aws_s3_bucket_policy" "alb-logs" {
 }
 
 data "aws_acm_certificate" "this" {
-  count       = "${ lower(var.ssl_certificate_arn) == "none" ? 1 : 0 }"
+  count       = "${ local.get_ssl_cert ? 1 : 0 }"
   domain      = "${var.acm_cert_domain}"
   statuses    = ["ISSUED", "PENDING_VALIDATION"]
   most_recent = "${var.most_recent_certificate}"
