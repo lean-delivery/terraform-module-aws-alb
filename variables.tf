@@ -95,6 +95,11 @@ variable "root_domain" {
   description = "Root domain in which custom DNS record for ALB would be created"
 }
 
+variable "ssl_certificate_arn" {
+  description = "ARN of SSL certificate to use for ALB"
+  default     = "none"
+}
+
 variable "tags" {
   type        = "map"
   description = "Additional tags for resources"
