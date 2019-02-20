@@ -4,7 +4,7 @@ locals {
     Environment = "${var.environment}"
   }
 
-  get_ssl_cert = "${ lower(var.ssl_certificate_arn) == "none" ? "true" : "false" }"
+  subdomains = "${ var.enable_subdomains ? "*." : "" }"
 }
 
 resource "aws_security_group" "allow_in80_in443_outALL" {
@@ -115,7 +115,7 @@ data "aws_route53_zone" "alb" {
 
 resource "aws_route53_record" "alb" {
   zone_id = "${data.aws_route53_zone.alb.zone_id}"
-  name    = "${var.project}-${var.environment}-${data.aws_region.current.name}.${var.root_domain}"
+  name    = "${local.subdomains}${var.project}-${var.environment}-${data.aws_region.current.name}.${var.root_domain}"
   type    = "A"
 
   alias {

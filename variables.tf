@@ -22,6 +22,11 @@ variable "enable_logging" {
   description = "Trigger to enable ALB logging"
 }
 
+variable "enable_subdomains" {
+  description = "Trigger to add '*.' before ALB custom domain name"
+  default     = "false"
+}
+
 variable "default_load_balancer_is_internal" {
   description = "Boolean determining if the load balancer is internal or externally facing."
   default     = "true"
@@ -93,11 +98,6 @@ variable "acm_cert_domain" {
 variable "root_domain" {
   default     = ""
   description = "Root domain in which custom DNS record for ALB would be created"
-}
-
-variable "ssl_certificate_arn" {
-  description = "ARN of SSL certificate to use for ALB"
-  default     = "none"
 }
 
 variable "tags" {
