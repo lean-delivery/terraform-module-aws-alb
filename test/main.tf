@@ -22,9 +22,8 @@ module "alb" {
   vpc_id  = "${aws_vpc.foo.id}"
   subnets = ["${aws_subnet.foo.id}", "${aws_subnet.bar.id}"]
 
-  # acm_cert_domain         = "*.example.com"
-  # most_recent_certificate = true
+  acm_cert_domain         = "*.example.com"
+  most_recent_certificate = true
 
-  ssl_certificate_arn = "arn:aws:acm:us-east-1:<account_id>:certificate/00000000-0000-0000-0000-00000000000"
-  root_domain         = "example.com"
+  root_domain = "example.com"
 }
