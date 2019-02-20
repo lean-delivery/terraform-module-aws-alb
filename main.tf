@@ -92,7 +92,7 @@ module "alb" {
   vpc_id                    = "${var.vpc_id}"
 
   /////// Configure listeners and target groups ///////
-  https_listeners       = "${list(map("certificate_arn", "${data.aws_acm_certificate.this.*.arn}", "port", "${var.default_https_tcp_listeners_port}"))}"
+  https_listeners       = "${list(map("certificate_arn", "${element(concat(data.aws_acm_certificate.this.*.arn), 0)}", "port", "${var.default_https_tcp_listeners_port}"))}"
   https_listeners_count = "${var.default_https_tcp_listeners_count}"
 
   http_tcp_listeners       = "${list(map("port", "${var.default_http_tcp_listeners_port}", "protocol", "HTTP"))}"
