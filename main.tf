@@ -114,6 +114,19 @@ data "aws_route53_zone" "alb" {
 
 resource "aws_route53_record" "alb" {
   zone_id = "${data.aws_route53_zone.alb.zone_id}"
+  name    = "${var.project}-${var.environment}-${data.aws_region.current.name}.${var.root_domain}"
+  type    = "A"
+
+  alias {
+    name                   = "${module.alb.dns_name}"
+    zone_id                = "${module.alb.load_balancer_zone_id}"
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "alb-subdomain" {
+  count   = "${ var.enable_subdomains ? 1 : 0 }"
+  zone_id = "${data.aws_route53_zone.alb.zone_id}"
   name    = "${local.subdomains}${var.project}-${var.environment}-${data.aws_region.current.name}.${var.root_domain}"
   type    = "A"
 
