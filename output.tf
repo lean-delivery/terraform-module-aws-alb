@@ -1,17 +1,32 @@
 output "alb_sg_id" {
-  description = "The ID of security group for ALB."
+  description = "The ID of main security group for ALB."
   value       = "${aws_security_group.allow_in80_in443_outALL.id}"
 }
 
 output "alb_sg_ingress" {
-  description = "The Ingress rule of security group for ALB."
+  description = "The Ingress rule of main security group for ALB."
   value       = "${aws_security_group.allow_in80_in443_outALL.ingress}"
 }
 
 output "alb_sg_egress" {
-  description = "The Egress rule of security group for ALB."
+  description = "The Egress rule of main security group for ALB."
   value       = "${aws_security_group.allow_in80_in443_outALL.egress}"
 }
+
+# output "alb_additional_sg_id" {
+#   description = "The ID of additional security group for ALB."
+#   value       = "${aws_security_group.SG_with_additional_ports.id}"
+# }
+
+# output "alb_additional_sg_ingress" {
+#   description = "The Ingress rule of additional security group for ALB."
+#   value       = "${aws_security_group.SG_with_additional_ports.ingress}"
+# }
+
+# output "alb_additional_sg_egress" {
+#   description = "The Egress rule of additional security group for ALB."
+#   value       = "${aws_security_group.SG_with_additional_ports.egress}"
+# }
 
 output "alb_s3_logs" {
   description = "S3 bucket name for storing ALB logs."
@@ -25,7 +40,7 @@ output "alb_dns_name" {
 
 output "alb_custom_dns_name" {
   description = "The custom DNS name of the load balancer."
-  value       = "${aws_route53_record.alb.name}"
+  value       = "${module.https_listeners.alb_custom_dns_name}"
 }
 
 output "alb_http_tcp_listener_arns" {
@@ -79,5 +94,10 @@ output "alb_target_group_names" {
 }
 
 output "root_domain_hosted_zone_id" {
-  value = "${data.aws_route53_zone.alb.zone_id}"
+  value = "${module.https_listeners.root_domain_hosted_zone_id}"
+}
+
+output "aws_acm_certificate_list" {
+  description = "List of maps aws acm certificates - certificate_arn and port"
+  value = "${module.https_listeners.https_listeners_list}"
 }
