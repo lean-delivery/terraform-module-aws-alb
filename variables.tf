@@ -126,8 +126,6 @@ variable "most_recent_certificate" {
   default     = "false"
 }
 
-
-
 variable "own_name" {
   description = "own aws_route53_record name instead default project-environment-aws_region_current_name.root_domain"
   default     = ""
@@ -139,93 +137,95 @@ variable "own_dns_name" {
 }
 
 variable "enable_cross_zone_load_balancing" {
-  type = "string"
+  type        = "string"
   description = " Indicates whether cross zone load balancing should be enabled in application load balancers"
-  default = "false"
+  default     = "false"
 }
 
 variable "enable_deletion_protection" {
-  type = "string"
+  type        = "string"
   description = " If true, deletion of the load balancer will be disabled via the AWS API. This will prevent Terraform from deleting the load balancer. Defaults to false"
-  default = "false"
+  default     = "false"
 }
 
 variable "enable_http2" {
-  type = "string"
+  type        = "string"
   description = " Indicates whether HTTP/2 is enabled in application load balancers"
-  default = "true"
+  default     = "true"
 }
 
 variable "extra_ssl_certs" {
-  type = "list"
+  type        = "list"
   description = "A list of maps describing any extra SSL certificates to apply to the HTTPS listeners. Required key/values - certificate_arn https_listener_index"
-  default = []
+  default     = []
 }
 
 variable "extra_ssl_certs_count" {
-  type = "string"
+  type        = "string"
   description = "A manually provided count/length of the extra_ssl_certs list of maps since the list cannot be computed"
-  default = "0"
+  default     = "0"
 }
 
 variable "idle_timeout" {
-  type = "string"
+  type        = "string"
   description = " The time in seconds that the connection is allowed to be idle"
-  default = "60"
+  default     = "60"
 }
 
 variable "ip_address_type" {
-  type = "string"
+  type        = "string"
   description = "The type of IP addresses used by the subnets for your load balancer. The possible values are ipv4 and dualstack"
-  default = "ipv4"
+  default     = "ipv4"
 }
 
 variable "listener_ssl_policy_default" {
-  type = "string"
+  type        = "string"
   description = "The security policy if using HTTPS externally on the load balancer"
-  default = "ELBSecurityPolicy-2016-08"
+  default     = "ELBSecurityPolicy-2016-08"
 }
 
 variable "load_balancer_create_timeout" {
-  type = "string"
+  type        = "string"
   description = " Timeout value when creating the ALB"
-  default = "10m"
+  default     = "10m"
 }
 
 variable "load_balancer_delete_timeout" {
-  type = "string"
+  type        = "string"
   description = " Timeout value when deleting the ALB"
-  default = "10m"
+  default     = "10m"
 }
 
 variable "load_balancer_is_internal" {
-  type = "string"
+  type        = "string"
   description = "Boolean determining if the load balancer is internal or externally facing"
-  default = "false"
+  default     = "false"
 }
 
 variable "load_balancer_update_timeout" {
-  type = "string"
+  type        = "string"
   description = " Timeout value when updating the ALB"
-  default = "10m"
+  default     = "10m"
 }
 
 variable "log_location_prefix" {
-  type = "string"
+  type        = "string"
   description = "S3 prefix within the log_bucket_name under which logs are stored"
-  default = ""
+  default     = ""
 }
 
 variable "ports_for_security_group" {
-  type = "list"
+  type        = "list"
   description = "ports that will be open to additional security_group"
+
   default = [
-  {
-    port = "80"
-    cidr = "0.0.0.0/0"
-  },
-  {
-    port = "443"
-    cidr = "0.0.0.0/0"
-  }]
+    {
+      port = "80"
+      cidr = "0.0.0.0/0"
+    },
+    {
+      port = "443"
+      cidr = "0.0.0.0/0"
+    },
+  ]
 }

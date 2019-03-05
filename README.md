@@ -1,10 +1,10 @@
-# Summary
+## Description
 
 Terraform module to setup AWS ALB with required parameters.
 
 Based on Hashicorp's [ALB module](https://github.com/terraform-aws-modules/terraform-aws-alb). In addition can configure S3 bucket to store ALB logs, Route53 record with custom DNS name and setup security group.
 
-## Example
+## Usage
 
 ```HCL
 module "alb" {
@@ -84,6 +84,23 @@ module "alb" {
 | target\_group\_arn\_suffixes | ARN suffixes of our target groups - can be used with CloudWatch. |
 | aws\_acm\_certificate\_list | List of maps aws acm certificates - certificate_arn and port |
 
+
+## Terraform versions
+Terraform v0.11.11
+
+## Contributing
+
+
 ## License
 
 Apache2.0 Licensed. See [LICENSE](https://github.com/lean-delivery/tf-module-aws-alb/tree/master/LICENSE) for full details.
+
+
+## Authors
+Lean Delivery Team team@lean-delivery.com
+
+
+
+
+
+

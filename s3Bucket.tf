@@ -10,7 +10,7 @@ data "aws_iam_policy_document" "alb-logs-policy" {
   count = "${ var.enable_logging ? 1 : 0 }"
 
   statement {
-    effect  = "Allow"
+    effect = "Allow"
 
     actions = [
       "s3:PutObject",
