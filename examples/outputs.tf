@@ -1,22 +1,22 @@
-# output "alb_sg_id" {
-#   description = "The ID of main security group for ALB."
-#   value       = "${module.alb.alb_sg_id}"
-# }
+output "alb_sg_id" {
+  description = "The ID of main security group for ALB."
+  value       = "${module.alb.alb_sg_id}"
+}
 
-# output "alb_sg_ingress" {
-#   description = "The Ingress rule of main security group for ALB."
-#   value       = "${module.alb.alb_sg_ingress}"
-# }
+output "alb_sg_ingress" {
+  description = "The Ingress rule of main security group for ALB."
+  value       = "${module.alb.alb_sg_ingress}"
+}
 
-# output "alb_sg_egress" {
-#   description = "The Egress rule of main security group for ALB."
-#   value       = "${module.alb.alb_sg_egress}"
-# }
+output "alb_sg_egress" {
+  description = "The Egress rule of main security group for ALB."
+  value       = "${module.alb.alb_sg_egress}"
+}
 
-# output "alb_s3_logs" {
-#   description = "S3 bucket name for storing ALB logs."
-#   value       = "${module.alb.alb_s3_logs}"
-# }
+output "alb_s3_logs" {
+  description = "S3 bucket name for storing ALB logs."
+  value       = "${module.alb.alb_s3_logs}"
+}
 
 output "alb_dns_name" {
   description = "The DNS name of the load balancer."
@@ -73,16 +73,28 @@ output "alb_target_group_names" {
   value       = "${module.alb.alb_target_group_names}"
 }
 
-# output "aws_acm_certificate_list" {
-#   description = "List of maps aws acm certificates - certificate_arn and port"
-#   value       = "${module.alb.aws_acm_certificate_list}"
-# }
+output "aws_acm_certificate_list" {
+  description = "List of maps aws acm certificates - certificate_arn and port"
+  value       = "${module.alb.aws_acm_certificate_list}"
+}
 
-# output "root_domain_hosted_zone_id" {
-#   value       = "${module.alb.root_domain_hosted_zone_id}"
-# }
+output "root_domain_hosted_zone_id" {
+  value       = "${module.alb.root_domain_hosted_zone_id}"
+}
 
-# output "alb_custom_dns_name" {
-#   description = "The custom DNS name of the load balancer."
-#   value       = "${module.alb.alb_custom_dns_name}"
-# }
+output "alb_custom_dns_name" {
+  description = "The custom DNS name of the load balancer."
+  value       = "${module.alb.alb_custom_dns_name}"
+}
+
+output "account_id" {
+  value = "${data.aws_caller_identity.current.account_id}"
+}
+
+output "caller_arn" {
+  value = "${data.aws_caller_identity.current.arn}"
+}
+
+output "caller_user" {
+  value = "${data.aws_caller_identity.current.user_id}"
+}

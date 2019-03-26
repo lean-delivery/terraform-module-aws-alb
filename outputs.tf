@@ -1,22 +1,22 @@
-# output "alb_sg_id" {
-#   description = "The ID of main security group for ALB."
-#   value       = "${aws_security_group.allow_in80_in443_outALL.id}"
-# }
+output "alb_sg_id" {
+  description = "The ID of main security group for ALB."
+  value       = "${aws_security_group.allow_in80_in443_outALL.id}"
+}
 
-# output "alb_sg_ingress" {
-#   description = "The Ingress rule of main security group for ALB."
-#   value       = "${aws_security_group.allow_in80_in443_outALL.ingress}"
-# }
+output "alb_sg_ingress" {
+  description = "The Ingress rule of main security group for ALB."
+  value       = "${aws_security_group.allow_in80_in443_outALL.ingress}"
+}
 
-# output "alb_sg_egress" {
-#   description = "The Egress rule of main security group for ALB."
-#   value       = "${aws_security_group.allow_in80_in443_outALL.egress}"
-# }
+output "alb_sg_egress" {
+  description = "The Egress rule of main security group for ALB."
+  value       = "${aws_security_group.allow_in80_in443_outALL.egress}"
+}
 
-# output "alb_s3_logs" {
-#   description = "S3 bucket name for storing ALB logs."
-#   value       = "${element(concat(aws_s3_bucket.alb-logs.*.id, list("")), 0)}"
-# }
+output "alb_s3_logs" {
+  description = "S3 bucket name for storing ALB logs."
+  value       = "${element(concat(aws_s3_bucket.alb-logs.*.id, list("")), 0)}"
+}
 
 output "alb_dns_name" {
   description = "The DNS name of the load balancer."
@@ -73,16 +73,16 @@ output "alb_target_group_names" {
   value       = "${module.alb.target_group_names}"
 }
 
-# output "aws_acm_certificate_list" {
-#   value       = "${local.https_listeners_list}"
-#   description = "List of maps aws acm certificates - certificate_arn and port"
-# }
+output "aws_acm_certificate_list" {
+  description = "List of maps aws acm certificates - certificate_arn and port"
+  value       = "${local.https_listeners_list}"
+}
 
-# output "root_domain_hosted_zone_id" {
-#   value = "${element(data.aws_route53_zone.alb.*.zone_id, "0")}"
-# }
+output "root_domain_hosted_zone_id" {
+  value = "${element(concat(data.aws_route53_zone.alb.*.zone_id, list("")),"0")}"
+}
 
-# output "alb_custom_dns_name" {
-#   value       = "${element(aws_route53_record.alb.*.name, "0")}"
-#   description = "The custom DNS name of the load balancer."
-# }
+output "alb_custom_dns_name" {
+  description = "The custom DNS name of the load balancer."
+  value       = "${element(concat(aws_route53_record.alb.*.name, list("")), "0")}"
+}
