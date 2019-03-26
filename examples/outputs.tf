@@ -79,7 +79,7 @@ output "aws_acm_certificate_list" {
 }
 
 output "root_domain_hosted_zone_id" {
-  value       = "${module.alb.root_domain_hosted_zone_id}"
+  value = "${module.alb.root_domain_hosted_zone_id}"
 }
 
 output "alb_custom_dns_name" {
