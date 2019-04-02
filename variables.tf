@@ -135,3 +135,13 @@ variable "most_recent_certificate" {
   description = "Triger to use most recent SSL certificate"
   default     = "false"
 }
+
+variable "lifecycle_rule" {
+  description = "Enable or disable s3 lifecycle_rule"
+  default     = "true"
+}
+
+variable "expiration_days" {
+  description = "s3 lifecycle rule expiration period"
+  default     = "5"
+}

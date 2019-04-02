@@ -43,6 +43,15 @@ resource "aws_s3_bucket" "alb-logs" {
   force_destroy = "${ lower(var.environment) == "production" ? "false" : var.force_destroy}"
 
   tags = "${local.default_tags}"
+
+  lifecycle_rule {
+    enabled = "${var.lifecycle_rule}"
+
+    expiration {
+      days = "${var.expiration_days}"
+    }
+  }
+
 }
 
 data "aws_region" "current" {}
