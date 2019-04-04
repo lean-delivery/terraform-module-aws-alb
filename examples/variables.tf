@@ -1,3 +1,7 @@
+variable "region" {
+  default = "us-east-1"
+}
+
 variable "vpc_id" {
   description = "VPC id where the load balancer and other resources will be deployed"
 }
@@ -20,16 +24,6 @@ variable "environment" {
 variable "enable_logging" {
   default     = "true"
   description = "Trigger to enable ALB logging"
-}
-
-variable "enable_subdomains" {
-  description = "Trigger to add '*.' before ALB custom domain name"
-  default     = "false"
-}
-
-variable "default_load_balancer_is_internal" {
-  description = "Boolean determining if the load balancer is internal or externally facing."
-  default     = "true"
 }
 
 variable "force_destroy" {
