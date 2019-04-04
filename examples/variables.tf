@@ -4,13 +4,11 @@ variable "region" {
 
 variable "vpc_id" {
   description = "VPC id where the load balancer and other resources will be deployed"
-  default     = "vpc-7e305e05"
 }
 
 variable "subnets" {
   type        = "list"
   description = "A list of subnets to associate with the load balancer"
-  default     = ["subnet-1bbdb534", "subnet-65467b5a", "subnet-bffd4bb0", "subnet-d9fd2093"]
 }
 
 variable "project" {
