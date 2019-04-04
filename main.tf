@@ -18,10 +18,11 @@ module "alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "3.5.0"
 
-  load_balancer_name = "${var.project}-${var.environment}"
-  security_groups    = ["${aws_security_group.allow_in80_in443_outALL.id}"]
-  subnets            = "${var.subnets}"
-  vpc_id             = "${var.vpc_id}"
+  load_balancer_name        = "${var.project}-${var.environment}"
+  load_balancer_is_internal = "${var.default_load_balancer_is_internal}"
+  security_groups           = ["${aws_security_group.allow_in80_in443_outALL.id}"]
+  subnets                   = "${var.subnets}"
+  vpc_id                    = "${var.vpc_id}"
 
   /// Configure listeners and target groups ///////
   https_listeners                  = "${local.https_listeners_list}"
@@ -69,6 +70,19 @@ resource "aws_route53_record" "alb" {
 
   alias {
     name                   = "${var.own_dns_name != "" ? var.own_dns_name : module.alb.dns_name}" #???
+    zone_id                = "${module.alb.load_balancer_zone_id}"
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "alb-subdomain" {
+  count   = "${ var.enable_subdomains ? 1 : 0 }"
+  zone_id = "${data.aws_route53_zone.alb.zone_id}"
+  name    = "${local.subdomains}${var.project}-${var.environment}-${data.aws_region.current.name}.${var.root_domain}"
+  type    = "A"
+
+  alias {
+    name                   = "${module.alb.dns_name}"
     zone_id                = "${module.alb.load_balancer_zone_id}"
     evaluate_target_health = true
   }

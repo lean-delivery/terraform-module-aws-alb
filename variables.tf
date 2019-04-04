@@ -22,6 +22,16 @@ variable "enable_logging" {
   description = "Trigger to enable ALB logging"
 }
 
+variable "enable_subdomains" {
+  description = "Trigger to add '*.' before ALB custom domain name"
+  default     = "false"
+}
+
+variable "default_load_balancer_is_internal" {
+  description = "Boolean determining if the load balancer is internal or externally facing."
+  default     = "true"
+}
+
 variable "force_destroy" {
   default     = "true"
   description = "Enforces destruction of S3 bucket with ALB logs"
