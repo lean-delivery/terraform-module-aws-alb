@@ -3,7 +3,7 @@ variable "region" {
 }
 
 variable "vpc_id" {
-  description = "VPC id where the load balancer and other resources will be deployed
+  description = "VPC id where the load balancer and other resources will be deployed"
 }
 
 variable "subnets" {
