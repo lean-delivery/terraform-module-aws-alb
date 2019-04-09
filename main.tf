@@ -51,7 +51,6 @@ resource "aws_s3_bucket" "alb-logs" {
       days = "${var.expiration_days}"
     }
   }
-
 }
 
 data "aws_region" "current" {}
