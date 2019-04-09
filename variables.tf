@@ -138,7 +138,7 @@ variable "most_recent_certificate" {
 
 variable "lifecycle_rule" {
   description = "Enable or disable s3 lifecycle_rule"
-  default     = "true"
+  default     = "false"
 }
 
 variable "expiration_days" {
