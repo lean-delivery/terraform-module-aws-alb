@@ -46,8 +46,8 @@ module "alb" {
 | tags | Additional tags for resources | map | `<map>` | no |
 | target\_groups\_defaults | Target group health check parameters | map | `<map>` | no |
 | vpc\_id | VPC id where the load balancer and other resources will be deployed | string | - | yes |
-| expiration\_days | s3 lifecycle rule expiration period | integer | 5 | yes |
-| lifecycle\_rule | Enable or disable s3 lifecycle rule | boolean | true | yes |
+| expiration\_days | s3 lifecycle rule expiration period | string | `5` | yes |
+| lifecycle\_rule | Enable or disable s3 lifecycle rule | string | `true` | yes |
 
 ## Outputs
 
