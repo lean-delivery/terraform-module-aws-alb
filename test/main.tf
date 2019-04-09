@@ -26,4 +26,6 @@ module "alb" {
   most_recent_certificate = true
 
   root_domain = "example.com"
-}
+  
+  lifecycle_rule = true
+  expiration_days = "5"
