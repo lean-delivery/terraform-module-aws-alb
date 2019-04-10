@@ -136,12 +136,12 @@ variable "most_recent_certificate" {
   default     = "false"
 }
 
-variable "s3_logs_lifecycle_rule_enabled" {
+variable "alb_logs_lifecycle_rule_enabled" {
   description = "Enable or disable lifecycle_rule for ALB logs s3 bucket"
   default     = "false"
 }
 
-variable "s3_logs_expiration_days" {
+variable "alb_logs_expiration_days" {
   description = "s3 lifecycle rule expiration period in days"
   default     = "5"
 }
