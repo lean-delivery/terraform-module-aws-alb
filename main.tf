@@ -45,7 +45,7 @@ resource "aws_s3_bucket" "alb-logs" {
   tags = "${local.default_tags}"
 
   lifecycle_rule {
-    enabled = "${var.lifecycle_rule}"
+    enabled = "${var.s3_logs_lifecycle_rule_enabled}"
 
     expiration {
       days = "${var.expiration_days}"
