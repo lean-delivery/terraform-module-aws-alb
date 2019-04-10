@@ -1,10 +1,10 @@
-# Summary
+## Description
 
 Terraform module to setup AWS ALB with required parameters.
 
 Based on Hashicorp's [ALB module](https://github.com/terraform-aws-modules/terraform-aws-alb). In addition can configure S3 bucket to store ALB logs, Route53 record with custom DNS name and setup security group.
 
-## Example
+## Usage
 
 ```HCL
 module "alb" {
@@ -18,6 +18,9 @@ module "alb" {
 
   acm_cert_domain = "*.project.example.com"
   root_domain     = "example.com"
+
+  s3_logs_lifecycle_rule_enabled = true
+  s3_logs_expiration_days        = "5"
 }
 ```
 
@@ -46,6 +49,8 @@ module "alb" {
 | tags | Additional tags for resources | map | `<map>` | no |
 | target\_groups\_defaults | Target group health check parameters | map | `<map>` | no |
 | vpc\_id | VPC id where the load balancer and other resources will be deployed | string | - | yes |
+| alb\_logs\_expiration\_days | s3 lifecycle rule expiration period | string | `5` | yes |
+| alb\_logs\_lifecycle\_rule\_enabled | Enable or disable s3 lifecycle rule | string | `false` | yes |
 
 ## Outputs
 
@@ -69,6 +74,18 @@ module "alb" {
 | root\_domain\_hosted\_zone\_id | - |
 | target\_group\_arn\_suffixes | ARN suffixes of our target groups - can be used with CloudWatch. |
 
+## Terraform versions
+
+Terraform version 0.11.11 or newer is required for this module to work.
+
+## Contributing
+
+Thank you for your interest in contributing! Please refer to [CONTRIBUTING.md](https://github.com/lean-delivery/tf-module-aws-alb/blob/master/CONTRIBUTING.md) for guidance.
+
 ## License
 
 Apache2.0 Licensed. See [LICENSE](https://github.com/lean-delivery/tf-module-aws-alb/tree/master/LICENSE) for full details.
+
+## Authors
+
+Lean Delivery Team <team@lean-delivery.com>

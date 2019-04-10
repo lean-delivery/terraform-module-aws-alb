@@ -135,3 +135,13 @@ variable "most_recent_certificate" {
   description = "Triger to use most recent SSL certificate"
   default     = "false"
 }
+
+variable "alb_logs_lifecycle_rule_enabled" {
+  description = "Enable or disable lifecycle_rule for ALB logs s3 bucket"
+  default     = "false"
+}
+
+variable "alb_logs_expiration_days" {
+  description = "s3 lifecycle rule expiration period in days"
+  default     = "5"
+}
