@@ -19,8 +19,8 @@ module "alb" {
   acm_cert_domain = "*.project.example.com"
   root_domain     = "example.com"
 
-  s3_logs_lifecycle_rule_enabled = true
-  s3_logs_expiration_days        = "5"
+  alb_logs_lifecycle_rule_enabled = true
+  alb_logs_expiration_days        = "5"
 }
 ```
 
