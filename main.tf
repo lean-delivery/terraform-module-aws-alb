@@ -7,6 +7,8 @@ locals {
   subdomains = "${ var.enable_subdomains ? "*." : "" }"
 }
 
+data "aws_partition" "current" {}
+
 resource "aws_security_group" "allow_in80_in443_outALL" {
   name        = "allow-in_80-in_443-out_ALL-${var.project}-${var.environment}"
   description = "Allow inbound traffic on ports 80 and 443"
@@ -66,7 +68,7 @@ data "aws_iam_policy_document" "alb-logs-policy" {
     ]
 
     resources = [
-      "arn:aws:s3:::${element(concat(aws_s3_bucket.alb-logs.*.id, list("")), 0)}/*",
+      "arn:${data.aws_partition.current.partition}:s3:::${element(concat(aws_s3_bucket.alb-logs.*.id, list("")), 0)}/*",
     ]
 
     principals = {
