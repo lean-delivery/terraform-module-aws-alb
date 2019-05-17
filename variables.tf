@@ -145,3 +145,8 @@ variable "alb_logs_expiration_days" {
   description = "s3 lifecycle rule expiration period in days"
   default     = "5"
 }
+
+variable "ecs_launch_type" {
+  description = "ECS launch type (EC2 or Fargate)"
+  default     = "FARGATE"
+}
