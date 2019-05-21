@@ -146,7 +146,3 @@ variable "alb_logs_expiration_days" {
   default     = "5"
 }
 
-variable "ecs_launch_type" {
-  description = "ECS launch type (EC2 or Fargate)"
-  default     = "FARGATE"
-}
