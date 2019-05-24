@@ -93,7 +93,7 @@ data "aws_acm_certificate" "this" {
 }
 
 data "aws_iam_server_certificate" "ss_cert" {
-  name        = "cn-north-1.elb.amazonaws.com.cn"
+  name        = "${data.aws_region.current.name}.elb.amazonaws.com.cn"
   latest      = true
   count = "${data.aws_partition.current.partition == "aws-cn" ? 1 : 0}"
 }
