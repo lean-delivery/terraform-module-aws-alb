@@ -145,4 +145,3 @@ variable "alb_logs_expiration_days" {
   description = "s3 lifecycle rule expiration period in days"
   default     = "5"
 }
-

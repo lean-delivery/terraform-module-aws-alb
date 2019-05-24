@@ -89,13 +89,13 @@ data "aws_acm_certificate" "this" {
   domain      = "${var.acm_cert_domain}"
   statuses    = ["ISSUED", "PENDING_VALIDATION"]
   most_recent = "${var.most_recent_certificate}"
-  count = "${data.aws_partition.current.partition == "aws" ? 1 : 0}"
+  count       = "${data.aws_partition.current.partition == "aws" ? 1 : 0}"
 }
 
 data "aws_iam_server_certificate" "ss_cert" {
-  name        = "${data.aws_region.current.name}.elb.amazonaws.com.cn"
-  latest      = true
-  count = "${data.aws_partition.current.partition == "aws-cn" ? 1 : 0}"
+  name   = "${data.aws_region.current.name}.elb.amazonaws.com.cn"
+  latest = true
+  count  = "${data.aws_partition.current.partition == "aws-cn" ? 1 : 0}"
 }
 
 module "alb" {
@@ -126,7 +126,7 @@ module "alb" {
 }
 
 data "aws_route53_zone" "alb" {
-  name = "${var.root_domain}."
+  name  = "${var.root_domain}."
   count = "${data.aws_partition.current.partition == "aws" ? 1 : 0}"
 }
 
@@ -140,6 +140,7 @@ resource "aws_route53_record" "alb" {
     zone_id                = "${module.alb.load_balancer_zone_id}"
     evaluate_target_health = true
   }
+
   count = "${data.aws_partition.current.partition == "aws" ? 1 : 0}"
 }
 
