@@ -89,6 +89,13 @@ data "aws_acm_certificate" "this" {
   domain      = "${var.acm_cert_domain}"
   statuses    = ["ISSUED", "PENDING_VALIDATION"]
   most_recent = "${var.most_recent_certificate}"
+  count       = "${data.aws_partition.current.partition == "aws" ? 1 : 0}"
+}
+
+data "aws_iam_server_certificate" "ss_cert" {
+  name   = "${data.aws_region.current.name}.elb.amazonaws.com.cn"
+  latest = true
+  count  = "${data.aws_partition.current.partition == "aws-cn" ? 1 : 0}"
 }
 
 module "alb" {
@@ -102,7 +109,7 @@ module "alb" {
   vpc_id                    = "${var.vpc_id}"
 
   /////// Configure listeners and target groups ///////
-  https_listeners       = "${list(map("certificate_arn", "${element(concat(data.aws_acm_certificate.this.*.arn), 0)}", "port", "${var.default_https_tcp_listeners_port}"))}"
+  https_listeners       = "${list(map("certificate_arn", "${element(concat(data.aws_acm_certificate.this.*.arn, data.aws_iam_server_certificate.ss_cert.*.arn), 0)}", "port", "${var.default_https_tcp_listeners_port}"))}"
   https_listeners_count = "${var.default_https_tcp_listeners_count}"
 
   http_tcp_listeners       = "${list(map("port", "${var.default_http_tcp_listeners_port}", "protocol", "HTTP"))}"
@@ -119,7 +126,8 @@ module "alb" {
 }
 
 data "aws_route53_zone" "alb" {
-  name = "${var.root_domain}."
+  name  = "${var.root_domain}."
+  count = "${data.aws_partition.current.partition == "aws" ? 1 : 0}"
 }
 
 resource "aws_route53_record" "alb" {
@@ -132,10 +140,12 @@ resource "aws_route53_record" "alb" {
     zone_id                = "${module.alb.load_balancer_zone_id}"
     evaluate_target_health = true
   }
+
+  count = "${data.aws_partition.current.partition == "aws" ? 1 : 0}"
 }
 
 resource "aws_route53_record" "alb-subdomain" {
-  count   = "${ var.enable_subdomains ? 1 : 0 }"
+  count   = "${data.aws_partition.current.partition == "aws" ? "${var.enable_subdomains == true ? 1 : 0}" : 0 }"
   zone_id = "${data.aws_route53_zone.alb.zone_id}"
   name    = "${local.subdomains}${var.project}-${var.environment}-${data.aws_region.current.name}.${var.root_domain}"
   type    = "A"
