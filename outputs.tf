@@ -25,7 +25,7 @@ output "alb_dns_name" {
 
 output "alb_custom_dns_name" {
   description = "The custom DNS name of the load balancer."
-  value       = "${data.aws_partition.current.partition == "aws" ? "${element(concat(aws_route53_record.alb.*.name, list("")), 0)}":"${element(concat(data.aws_iam_server_certificate.ss_cert.*.name, list("")), 0)}"}"
+  value       = "${element(concat(aws_route53_record.alb.*.name, data.aws_iam_server_certificate.ss_cert.*.name, list("")), 0)}"
 }
 
 output "alb_http_tcp_listener_arns" {
@@ -79,5 +79,5 @@ output "alb_target_group_names" {
 }
 
 output "root_domain_hosted_zone_id" {
-  value = "${data.aws_partition.current.partition == "aws" ? "${element(concat(aws_route53_record.alb.*.zone_id, list("")), 0)}":""}"
+  value = "${element(concat(aws_route53_record.alb.*.zone_id, list("")), 0)}"
 }

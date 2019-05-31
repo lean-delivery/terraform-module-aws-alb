@@ -145,7 +145,7 @@ resource "aws_route53_record" "alb" {
 }
 
 resource "aws_route53_record" "alb-subdomain" {
-  count   = "${var.enable_subdomains == true ? "${data.aws_partition.current.partition == "aws" ? 1 : 0}" : 0 }"
+  count   = "${data.aws_partition.current.partition == "aws" ? "${var.enable_subdomains == true ? 1 : 0}" : 0 }"
   zone_id = "${data.aws_route53_zone.alb.zone_id}"
   name    = "${local.subdomains}${var.project}-${var.environment}-${data.aws_region.current.name}.${var.root_domain}"
   type    = "A"
