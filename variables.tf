@@ -148,5 +148,10 @@ variable "alb_logs_expiration_days" {
 
 variable "alb_custom_security_group" {
   description = "Security group ID that override default-created security group"
+  default     = "false"
+}
+
+variable "alb_custom_security_group_id" {
+  description = "Security group ID that override default-created security group"
   default     = "None"
 }
