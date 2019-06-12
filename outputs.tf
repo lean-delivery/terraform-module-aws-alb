@@ -1,16 +1,16 @@
 output "alb_sg_id" {
   description = "The ID of security group for ALB."
-  value       = "${element(concat(aws_security_group.allow_in80_in443_outALL.*.id, list(var.alb_custom_security_group)), 0)}"
+  value       = "${element(concat(aws_security_group.allow_in80_in443_outALL.*.id, list(var.alb_custom_security_group_id)), 0)}"
 }
 
 output "alb_sg_ingress" {
   description = "The Ingress rule of security group for ALB."
-  value       = "${element(concat(aws_security_group.allow_in80_in443_outALL.*.id, list("Please refer to ${var.alb_custom_security_group}")), 0)}"
+  value       = "${element(concat(aws_security_group.allow_in80_in443_outALL.*.id, list("Please refer to ${var.alb_custom_security_group_id}")), 0)}"
 }
 
 output "alb_sg_egress" {
   description = "The Egress rule of security group for ALB."
-  value       = "${element(concat(aws_security_group.allow_in80_in443_outALL.*.id, list("Please refer to ${var.alb_custom_security_group}")), 0)}"
+  value       = "${element(concat(aws_security_group.allow_in80_in443_outALL.*.id, list("Please refer to ${var.alb_custom_security_group_id}")), 0)}"
 }
 
 output "alb_s3_logs" {
