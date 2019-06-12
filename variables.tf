@@ -145,3 +145,8 @@ variable "alb_logs_expiration_days" {
   description = "s3 lifecycle rule expiration period in days"
   default     = "5"
 }
+
+variable "alb_custom_security_group" {
+  description = "Security group ID that override default-created security group"
+  default     = "None"
+}
