@@ -10,7 +10,7 @@ locals {
 data "aws_partition" "current" {}
 
 resource "aws_security_group" "allow_in80_in443_outALL" {
-  count       = "${ var.alb_custom_security_group == "None" ? 1 : 0 }"
+  count       = "${ var.alb_custom_security_group ? 0 : 1 }"
   name        = "allow-in_80-in_443-out_ALL-${var.project}-${var.environment}"
   description = "Allow inbound traffic on ports 80 and 443"
   vpc_id      = "${var.vpc_id}"
@@ -105,7 +105,7 @@ module "alb" {
 
   load_balancer_name        = "${var.project}-${var.environment}"
   load_balancer_is_internal = "${var.default_load_balancer_is_internal}"
-  security_groups           = ["${element(concat(aws_security_group.allow_in80_in443_outALL.*.id, list(var.alb_custom_security_group)), 0)}"]
+  security_groups           = ["${element(concat(aws_security_group.allow_in80_in443_outALL.*.id, list(var.alb_custom_security_group_id)), 0)}"]
   subnets                   = "${var.subnets}"
   vpc_id                    = "${var.vpc_id}"
 
