@@ -10,7 +10,7 @@ locals {
 data "aws_partition" "current" {}
 
 resource "aws_security_group" "allow_in80_in443_outALL" {
-  count       = "${ var.alb_custom_security_group == "None" ? 0 : 1 }"
+  count       = "${ var.alb_custom_security_group == "None" ? 1 : 0 }"
   name        = "allow-in_80-in_443-out_ALL-${var.project}-${var.environment}"
   description = "Allow inbound traffic on ports 80 and 443"
   vpc_id      = "${var.vpc_id}"
