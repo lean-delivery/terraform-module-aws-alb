@@ -30,6 +30,7 @@ module "alb" {
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | acm\_cert\_domain | Domain name for which ACM certificate was created | string | `` | no |
+| acm\_cn | Whether to use acm certificate in AWS China. Default set to false for backward compatibility | string | `false` | no |
 | default\_http\_tcp\_listeners\_count | Switch to configure default HTTP listener | string | `0` | no |
 | default\_http\_tcp\_listeners\_port | Port of default HTTP listener | string | `80` | no |
 | default\_https\_tcp\_listeners\_count | Switch to configure default HTTPs listener | string | `1` | no |

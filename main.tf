@@ -90,13 +90,13 @@ data "aws_acm_certificate" "this" {
   domain      = "${var.acm_cert_domain}"
   statuses    = ["ISSUED", "PENDING_VALIDATION"]
   most_recent = "${var.most_recent_certificate}"
-  count       = "${data.aws_partition.current.partition == "aws" ? 1 : 0}"
+  count       = "${data.aws_partition.current.partition == "aws" ? 1 : "${var.cn_acm == true ? 1 : 0}" }"
 }
 
 data "aws_iam_server_certificate" "ss_cert" {
   name   = "${data.aws_region.current.name}.elb.amazonaws.com.cn"
   latest = true
-  count  = "${data.aws_partition.current.partition == "aws-cn" ? 1 : 0}"
+  count  = "${data.aws_partition.current.partition == "aws-cn" ? "${var.cn_acm == false ? 1 : 0}" : 0}"
 }
 
 module "alb" {
