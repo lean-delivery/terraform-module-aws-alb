@@ -53,7 +53,8 @@ module "alb" {
 | vpc\_id | VPC id where the load balancer and other resources will be deployed | string | - | yes |
 | alb\_logs\_expiration\_days | s3 lifecycle rule expiration period | string | `5` | yes |
 | alb\_logs\_lifecycle\_rule\_enabled | Enable or disable s3 lifecycle rule | string | `false` | yes |
-| alb\_custom\_security\_group | Security group ID that override default-created security group | string | `None` | no |
+| alb\_custom\_security\_group | Switch to override default-created security group | string | `false` | no |
+| alb\_custom\_security\_group\_id | Security group ID that override default-created security group | string | `None` | no |
 
 ## Outputs
 
