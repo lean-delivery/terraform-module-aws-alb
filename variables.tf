@@ -155,3 +155,8 @@ variable "alb_custom_security_group_id" {
   description = "Security group ID that override default-created security group"
   default     = "None"
 }
+
+variable "cn_acm" {
+  default     = "false"
+  description = "Whether to use acm certificate with AWS China"
+}

@@ -30,6 +30,7 @@ module "alb" {
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | acm\_cert\_domain | Domain name for which ACM certificate was created | string | `` | no |
+| cn\_acm | Whether to use acm certificate in AWS China. Default set to false for backward compatibility | string | `false` | no |
 | default\_http\_tcp\_listeners\_count | Switch to configure default HTTP listener | string | `0` | no |
 | default\_http\_tcp\_listeners\_port | Port of default HTTP listener | string | `80` | no |
 | default\_https\_tcp\_listeners\_count | Switch to configure default HTTPs listener | string | `1` | no |
@@ -52,7 +53,8 @@ module "alb" {
 | vpc\_id | VPC id where the load balancer and other resources will be deployed | string | - | yes |
 | alb\_logs\_expiration\_days | s3 lifecycle rule expiration period | string | `5` | yes |
 | alb\_logs\_lifecycle\_rule\_enabled | Enable or disable s3 lifecycle rule | string | `false` | yes |
-| alb\_custom\_security\_group | Security group ID that override default-created security group | string | `None` | no |
+| alb\_custom\_security\_group | Switch to override default-created security group | string | `false` | no |
+| alb\_custom\_security\_group\_id | Security group ID that override default-created security group | string | `None` | no |
 
 ## Outputs
 
