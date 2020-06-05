@@ -160,3 +160,13 @@ variable "cn_acm" {
   default     = "false"
   description = "Whether to use acm certificate with AWS China"
 }
+
+variable "cn_route53" {
+  default     = "false"
+  description = "Whether to use Route53 in AWS China"
+}
+
+variable "alb_custom_route53_record_name" {
+  default     = ""
+  description = "Custom Route53 record name for ALB"
+}
