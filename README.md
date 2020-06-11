@@ -31,6 +31,7 @@ module "alb" {
 |------|-------------|:----:|:-----:|:-----:|
 | acm\_cert\_domain | Domain name for which ACM certificate was created | string | `` | no |
 | cn\_acm | Whether to use acm certificate in AWS China. Default set to false for backward compatibility | string | `false` | no |
+| cn\_route53 | Whether to use Route53 in AWS China | string | `false` | no |
 | default\_http\_tcp\_listeners\_count | Switch to configure default HTTP listener | string | `0` | no |
 | default\_http\_tcp\_listeners\_port | Port of default HTTP listener | string | `80` | no |
 | default\_https\_tcp\_listeners\_count | Switch to configure default HTTPs listener | string | `1` | no |
@@ -55,6 +56,7 @@ module "alb" {
 | alb\_logs\_lifecycle\_rule\_enabled | Enable or disable s3 lifecycle rule | string | `false` | yes |
 | alb\_custom\_security\_group | Switch to override default-created security group | string | `false` | no |
 | alb\_custom\_security\_group\_id | Security group ID that override default-created security group | string | `None` | no |
+| alb\_custom\_route53\_record\_name | Custom Route53 record name for ALB | string | `None` | no |
 
 ## Outputs
 

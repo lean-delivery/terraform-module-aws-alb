@@ -128,12 +128,12 @@ module "alb" {
 
 data "aws_route53_zone" "alb" {
   name  = "${var.root_domain}."
-  count = "${data.aws_partition.current.partition == "aws" ? 1 : 0}"
+  count = "${data.aws_partition.current.partition == "aws" ? 1 : "${var.cn_route53 == true ? 1 : 0}" }"
 }
 
 resource "aws_route53_record" "alb" {
   zone_id = "${data.aws_route53_zone.alb.zone_id}"
-  name    = "${var.project}-${var.environment}-${data.aws_region.current.name}.${var.root_domain}"
+  name    = "${var.alb_custom_route53_record_name == "" ? "${var.project}-${var.environment}-${data.aws_region.current.name}.${var.root_domain}" : var.alb_custom_route53_record_name }"
   type    = "A"
 
   alias {
@@ -142,13 +142,14 @@ resource "aws_route53_record" "alb" {
     evaluate_target_health = true
   }
 
-  count = "${data.aws_partition.current.partition == "aws" ? 1 : 0}"
+  count = "${data.aws_partition.current.partition == "aws" ? 1 : "${var.cn_route53 == true ? 1 : 0}" }"
 }
 
 resource "aws_route53_record" "alb-subdomain" {
-  count   = "${data.aws_partition.current.partition == "aws" ? "${var.enable_subdomains == true ? 1 : 0}" : 0 }"
+  count = "${var.enable_subdomains == true ? "${data.aws_partition.current.partition == "aws" ? 1 : "${var.cn_route53 == true ? 1 : 0}" }" : 0}"
+
   zone_id = "${data.aws_route53_zone.alb.zone_id}"
-  name    = "${local.subdomains}${var.project}-${var.environment}-${data.aws_region.current.name}.${var.root_domain}"
+  name    = "${var.alb_custom_route53_record_name == "" ? "${local.subdomains}${var.project}-${var.environment}-${data.aws_region.current.name}.${var.root_domain}" : "${local.subdomains}${var.alb_custom_route53_record_name}" }"
   type    = "A"
 
   alias {
