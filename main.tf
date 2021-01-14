@@ -61,6 +61,7 @@ resource "aws_s3_bucket" "alb-logs" {
         sse_algorithm     = "AES256"
       }
     }
+  }
 }
 
 resource "aws_s3_bucket_public_access_block" "alb-logs-access-block" {
