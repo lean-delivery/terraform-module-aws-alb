@@ -63,8 +63,8 @@ resource "aws_s3_bucket" "alb-logs" {
     }
 }
 
-resource "aws_s3_bucket_public_access_block" "terraform-state-access-block" {
-  bucket = "${aws_s3_bucket.terraform-state.id}"
+resource "aws_s3_bucket_public_access_block" "alb-logs-access-block" {
+  bucket = "${aws_s3_bucket.alb-logs.id}"
 
   block_public_acls       = true
   block_public_policy     = true
