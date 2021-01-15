@@ -137,6 +137,8 @@ module "alb" {
   target_groups       = "${list(map("name", "${var.project}-${var.environment}", "backend_protocol", "${var.default_target_groups_backend_protocol}", "backend_port", "${var.default_target_groups_port}"))}"
   target_groups_count = "${var.default_target_groups_count}"
 
+  listener_ssl_policy_default = "ELBSecurityPolicy-TLS-1-2-2017-01"
+
   logging_enabled = "${var.enable_logging}"
   log_bucket_name = "${element(concat(aws_s3_bucket.alb-logs.*.id, list("")), 0)}"
   tags            = "${merge(local.default_tags, var.tags)}"
