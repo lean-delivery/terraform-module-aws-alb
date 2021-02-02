@@ -95,6 +95,24 @@ data "aws_iam_policy_document" "alb-logs-policy" {
       identifiers = ["${lookup(var.lb_accout_id_per_region, data.aws_region.current.name)}"]
     }
   }
+
+  statement {
+    effect = "Deny"
+    actions = [ "s3:*" ]
+    resources = [
+        "${aws_s3_bucket.alb-logs.id}",
+        "${aws_s3_bucket.alb-logs.id}/*"
+    ]
+    principals {
+        type = "*"
+        identifiers = [ "*" ]
+    }
+    condition {
+        test = "Bool"
+        variable = "aws:SecureTransport"
+        values = [ "false" ]
+    }
+  }
 }
 
 resource "aws_s3_bucket_policy" "alb-logs" {
