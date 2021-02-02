@@ -100,8 +100,8 @@ data "aws_iam_policy_document" "alb-logs-policy" {
     effect = "Deny"
     actions = [ "s3:*" ]
     resources = [
-        "${aws_s3_bucket.alb-logs.id}",
-        "${aws_s3_bucket.alb-logs.id}/*"
+        "${aws_s3_bucket.alb-logs.arn}",
+        "${aws_s3_bucket.alb-logs.arn}/*"
     ]
     principals {
         type = "*"
