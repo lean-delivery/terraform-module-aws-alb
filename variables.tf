@@ -3,7 +3,7 @@ variable "vpc_id" {
 }
 
 variable "subnets" {
-  type        = "list"
+  type        = list(string)
   description = "A list of subnets to associate with the load balancer"
 }
 
@@ -101,7 +101,7 @@ variable "root_domain" {
 }
 
 variable "tags" {
-  type        = "map"
+  type        = map(string)
   description = "Additional tags for resources"
   default     = {}
 }
@@ -170,3 +170,4 @@ variable "alb_custom_route53_record_name" {
   default     = ""
   description = "Custom Route53 record name for ALB"
 }
+
