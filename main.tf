@@ -100,13 +100,15 @@ data "aws_acm_certificate" "this" {
   domain      = var.acm_cert_domain
   statuses    = ["ISSUED", "PENDING_VALIDATION"]
   most_recent = var.most_recent_certificate
-  count       = data.aws_partition.current.partition == "aws" ? 1 : var.cn_acm == true ? 1 : 0
+  count       = 1
+  #count       = data.aws_partition.current.partition == "aws" ? 1 : var.cn_acm == true ? 1 : 0
 }
 
 data "aws_iam_server_certificate" "ss_cert" {
   name   = "${data.aws_region.current.name}.elb.amazonaws.com.cn"
   latest = true
-  count  = data.aws_partition.current.partition == "aws-cn" ? var.cn_acm == false ? 1 : 0 : 0
+  count = 0
+  #count  = data.aws_partition.current.partition == "aws-cn" ? var.cn_acm == false ? 1 : 0 : 0
 }
 
 module "alb" {
@@ -166,11 +168,11 @@ module "alb" {
 
 data "aws_route53_zone" "alb" {
   name  = "${var.root_domain}."
-  count = data.aws_partition.current.partition == "aws" ? 1 : var.cn_route53 == true ? 1 : 0
+  #count = data.aws_partition.current.partition == "aws" ? 1 : var.cn_route53 == true ? 1 : 0
 }
 
 resource "aws_route53_record" "alb" {
-  zone_id = data.aws_route53_zone.alb[0].zone_id
+  zone_id = data.aws_route53_zone.alb.zone_id
   name    = var.alb_custom_route53_record_name == "" ? "${var.project}-${var.environment}-${data.aws_region.current.name}.${var.root_domain}" : var.alb_custom_route53_record_name
   type    = "A"
 
@@ -180,13 +182,13 @@ resource "aws_route53_record" "alb" {
     evaluate_target_health = true
   }
 
-  count = data.aws_partition.current.partition == "aws" ? 1 : var.cn_route53 == true ? 1 : 0
+  #count = data.aws_partition.current.partition == "aws" ? 1 : var.cn_route53 == true ? 1 : 0
 }
 
 resource "aws_route53_record" "alb-subdomain" {
-  count = var.enable_subdomains == true ? data.aws_partition.current.partition == "aws" ? 1 : var.cn_route53 == true ? 1 : 0 : 0
+  count = var.enable_subdomains == true ? 1 : 0
 
-  zone_id = data.aws_route53_zone.alb[0].zone_id
+  zone_id = data.aws_route53_zone.alb.zone_id
   name    = var.alb_custom_route53_record_name == "" ? "${local.subdomains}${var.project}-${var.environment}-${data.aws_region.current.name}.${var.root_domain}" : "${local.subdomains}${var.alb_custom_route53_record_name}"
   type    = "A"
 
