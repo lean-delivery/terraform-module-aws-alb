@@ -180,3 +180,9 @@ variable "alb_custom_route53_record_name" {
   default     = ""
   description = "Custom Route53 record name for ALB"
 }
+
+variable "listener_ssl_policy" {
+  description = "The security policy if using HTTPS externally on the load balancer. [See](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-policy-table.html)."
+  type        = string
+  default     = "ELBSecurityPolicy-FS-1-2-Res-2020-10"
+}

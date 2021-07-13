@@ -119,7 +119,8 @@ module "alb" {
                           data.aws_acm_certificate.this.*.arn,
                           data.aws_iam_server_certificate.ss_cert.*.arn
                         ), 0),
-    port              = var.default_https_tcp_listeners_port
+    port              = var.default_https_tcp_listeners_port,
+    ssl_policy        = var.listener_ssl_policy
   }]
 
   http_tcp_listeners  = [{
