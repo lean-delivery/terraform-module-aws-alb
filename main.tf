@@ -118,26 +118,36 @@ module "alb" {
     certificate_arn   = element(concat(
                           data.aws_acm_certificate.this.*.arn,
                           data.aws_iam_server_certificate.ss_cert.*.arn
-                        ), 0),
-    port              = var.default_https_tcp_listeners_port,
+                        ), 0)
+    port              = var.default_https_tcp_listeners_port
     ssl_policy        = var.listener_ssl_policy
   }]
 
   http_tcp_listeners  = [{
-    port     = var.default_http_tcp_listeners_port,
+    port     = var.default_http_tcp_listeners_port
     protocol = "HTTP"
   }]
 
   target_groups       = [{
-    name             = "${var.project}-${var.environment}",
-    backend_protocol = var.default_target_groups_backend_protocol,
-    backend_port     = var.default_target_groups_port
-    health_check     = var.target_groups_health_check
+    name                               = "${var.project}-${var.environment}"
+    target_type                        = var.target_type
+    backend_protocol                   = var.default_target_groups_backend_protocol
+    backend_port                       = var.default_target_groups_port
+
+    deregistration_delay               = var.deregistration_delay
+//    slow_start                         = var.slow_start
+//    proxy_protocol_v2                  = var.proxy_protocol_v2
+//    lambda_multi_value_headers_enabled = var.lambda_multi_value_headers_enabled
+//    load_balancing_algorithm_type      = var.load_balancing_algorithm_type
+//    preserve_client_ip                 = var.preserve_client_ip
+
+    health_check                       = var.health_check
+    stickiness                         = var.stickiness
   }]
 
   access_logs         = {
     enabled = var.enable_logging
-    bucket = element(concat(aws_s3_bucket.alb-logs.*.id, tolist([""])), 0)
+    bucket  = element(concat(aws_s3_bucket.alb-logs.*.id, tolist([""])), 0)
   }
   tags                = merge(local.default_tags, var.tags)
 }
@@ -148,6 +158,8 @@ data "aws_route53_zone" "alb" {
 }
 
 resource "aws_route53_record" "alb" {
+  count = data.aws_partition.current.partition == "aws" ? 1 : var.cn_route53 == true ? 1 : 0
+
   zone_id = data.aws_route53_zone.alb[count.index].zone_id
   name    = var.alb_custom_route53_record_name == "" ? "${var.project}-${var.environment}-${data.aws_region.current.name}.${var.root_domain}" : var.alb_custom_route53_record_name
   type    = "A"
@@ -157,8 +169,6 @@ resource "aws_route53_record" "alb" {
     zone_id                = module.alb.lb_zone_id
     evaluate_target_health = true
   }
-
-  count = data.aws_partition.current.partition == "aws" ? 1 : var.cn_route53 == true ? 1 : 0
 }
 
 resource "aws_route53_record" "alb-subdomain" {

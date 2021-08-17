@@ -1,109 +1,155 @@
 variable "vpc_id" {
-  type        = string
   description = "VPC id where the load balancer and other resources will be deployed"
+  type        = string
   default     = ""
 }
 
 variable "subnets" {
-  type        = list(string)
   description = "A list of subnets to associate with the load balancer"
+  type        = list(string)
   default     = null
 }
 
 variable "project" {
+  description = "Project name (used for resource naming and tagging)"
   type        = string
   default     = "project"
-  description = "Project name (used for resource naming and tagging)"
 }
 
 variable "environment" {
+  description = "Environment name (used for resource naming and tagging)"
   type        = string
   default     = "test"
-  description = "Environment name (used for resource naming and tagging)"
 }
 
 variable "enable_logging" {
+  description = "Trigger to enable ALB logging"
   type        = bool
   default     = true
-  description = "Trigger to enable ALB logging"
 }
 
 variable "enable_subdomains" {
-  type        = bool
   description = "Trigger to add '*.' before ALB custom domain name"
+  type        = bool
   default     = false
 }
 
 variable "default_load_balancer_is_internal" {
-  type        = bool
   description = "Boolean determining if the load balancer is internal or externally facing."
+  type        = bool
   default     = true
 }
 
 variable "force_destroy" {
+  description = "Enforces destruction of S3 bucket with ALB logs"
   type        = bool
   default     = true
-  description = "Enforces destruction of S3 bucket with ALB logs"
 }
 
 variable "default_http_tcp_listeners_port" {
+  description = "Port of default HTTP listener"
   type        = number
   default     = 80
-  description = "Port of default HTTP listener"
 }
 
 variable "default_https_tcp_listeners_port" {
+  description = "Port of default HTTPs listener"
   type        = number
   default     = 443
-  description = "Port of default HTTPs listener"
 }
 
 variable "default_target_groups_port" {
+  description = "Port of default target group"
   type        = number
   default     = 80
-  description = "Port of default target group"
 }
 
-variable "target_groups_health_check" {
-  type        = map(any)
+variable "target_type" {
+  description = "Type of target that you must specify when registering targets with this target group."
+  type = string
+  default = "instance"
+}
+
+variable "deregistration_delay" {
+  description = "Amount time for Elastic Load Balancing to wait before changing the state of a deregistering target from draining to unused."
+  type = number
+  default = 300
+}
+
+variable "slow_start" {
+  description = "Amount time for targets to warm up before the load balancer sends them a full share of requests."
+  type = number
+  default = 0
+}
+
+variable "proxy_protocol_v2" {
+  description = "Whether to enable support for proxy protocol v2 on Network Load Balancers."
+  type = bool
+  default = false
+}
+
+variable "stickiness" {
+  description = "Stickiness configuration block."
+  type = map(any)
+  default = {}
+}
+
+variable "lambda_multi_value_headers_enabled" {
+  description = "Whether the request and response headers exchanged between the load balancer and the Lambda function include arrays of values or strings. Only applies when target_type is lambda"
+  type = bool
+  default = false
+}
+
+variable "load_balancing_algorithm_type" {
+  description = "Determines how the load balancer selects targets when routing requests. Only applicable for Application Load Balancer Target Groups."
+  type = string
+  default = "round_robin"
+}
+
+variable "preserve_client_ip" {
+  description = "Whether client IP preservation is enabled."
+  type = bool
+  default = false
+}
+
+variable "health_check" {
   description = "Target group health check parameters"
+  type        = map(any)
 
   default     = {
-    "health_check_path"                = "/healthcheck"
-    "health_check_matcher"             = "200"
-    "cookie_duration"                  = 86400
-    "deregistration_delay"             = 300
-    "health_check_interval"            = 10
-    "health_check_healthy_threshold"   = 3
-    "health_check_port"                = "traffic-port"
-    "health_check_timeout"             = 5
-    "health_check_unhealthy_threshold" = 3
-    "stickiness_enabled"               = true
-    "target_type"                      = "instance"
+    "enabled"             = true
+    "path"                = "/healthcheck"
+    "matcher"             = "200"
+    "interval"            = 10
+    "healthy_threshold"   = 3
+    "port"                = "traffic-port"
+    "timeout"             = 5
+    "unhealthy_threshold" = 3
+    "protocol"            = "HTTP"
   }
 }
 
 variable "default_target_groups_backend_protocol" {
+  description = "Backend protocol of default target group"
   type        = string
   default     = "HTTP"
-  description = "Backend protocol of default target group"
 }
 
 variable "acm_cert_domain" {
-  type        = string
   description = "Domain name for which ACM certificate was created"
+  type        = string
   default     = ""
 }
 
 variable "root_domain" {
+  description = "Root domain in which custom DNS record for ALB would be created"
   type        = string
   default     = ""
-  description = "Root domain in which custom DNS record for ALB would be created"
 }
 
 variable "tags" {
-  type        = map(string)
   description = "Additional tags for resources"
+  type        = map(string)
   default     = {}
 }
 
@@ -134,51 +180,51 @@ variable "lb_accout_id_per_region" {
 }
 
 variable "most_recent_certificate" {
-  type        = bool
   description = "Trigger to use most recent SSL certificate"
+  type        = bool
   default     = false
 }
 
 variable "alb_logs_lifecycle_rule_enabled" {
-  type        = bool
   description = "Enable or disable lifecycle_rule for ALB logs s3 bucket"
+  type        = bool
   default     = false
 }
 
 variable "alb_logs_expiration_days" {
-  type        = number
   description = "s3 lifecycle rule expiration period in days"
+  type        = number
   default     = 5
 }
 
 variable "alb_custom_security_group" {
-  type        = bool
   description = "Switch to override default-created security group"
+  type        = bool
   default     = false
 }
 
 variable "alb_custom_security_group_id" {
-  type        = string
   description = "Security group ID that override default-created security group"
+  type        = string
   default     = "None"
 }
 
 variable "cn_acm" {
+  description = "Whether to use acm certificate with AWS China"
   type        = bool
   default     = false
-  description = "Whether to use acm certificate with AWS China"
 }
 
 variable "cn_route53" {
+  description = "Whether to use Route53 in AWS China"
   type        = bool
   default     = false
-  description = "Whether to use Route53 in AWS China"
 }
 
 variable "alb_custom_route53_record_name" {
+  description = "Custom Route53 record name for ALB"
   type        = string
   default     = ""
-  description = "Custom Route53 record name for ALB"
 }
 
 variable "listener_ssl_policy" {
