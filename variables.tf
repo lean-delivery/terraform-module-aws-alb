@@ -90,7 +90,7 @@ variable "proxy_protocol_v2" {
 
 variable "stickiness" {
   description = "Stickiness configuration block."
-  type = map(any)
+  type = object({})
   default = {}
 }
 
