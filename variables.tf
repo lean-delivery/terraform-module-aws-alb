@@ -76,17 +76,17 @@ variable "deregistration_delay" {
   default = 300
 }
 
-variable "slow_start" {
-  description = "Amount time for targets to warm up before the load balancer sends them a full share of requests."
-  type = number
-  default = 0
-}
-
-variable "proxy_protocol_v2" {
-  description = "Whether to enable support for proxy protocol v2 on Network Load Balancers."
-  type = bool
-  default = false
-}
+//variable "slow_start" {
+//  description = "Amount time for targets to warm up before the load balancer sends them a full share of requests."
+//  type = number
+//  default = 0
+//}
+//
+//variable "proxy_protocol_v2" {
+//  description = "Whether to enable support for proxy protocol v2 on Network Load Balancers."
+//  type = bool
+//  default = false
+//}
 
 variable "stickiness" {
   description = "Stickiness configuration block."
@@ -94,23 +94,23 @@ variable "stickiness" {
   default = {}
 }
 
-variable "lambda_multi_value_headers_enabled" {
-  description = "Whether the request and response headers exchanged between the load balancer and the Lambda function include arrays of values or strings. Only applies when target_type is lambda"
-  type = bool
-  default = false
-}
+//variable "lambda_multi_value_headers_enabled" {
+//  description = "Whether the request and response headers exchanged between the load balancer and the Lambda function include arrays of values or strings. Only applies when target_type is lambda"
+//  type = bool
+//  default = false
+//}
 
-variable "load_balancing_algorithm_type" {
-  description = "Determines how the load balancer selects targets when routing requests. Only applicable for Application Load Balancer Target Groups."
-  type = string
-  default = "round_robin"
-}
-
-variable "preserve_client_ip" {
-  description = "Whether client IP preservation is enabled."
-  type = bool
-  default = false
-}
+//variable "load_balancing_algorithm_type" {
+//  description = "Determines how the load balancer selects targets when routing requests. Only applicable for Application Load Balancer Target Groups."
+//  type = string
+//  default = "round_robin"
+//}
+//
+//variable "preserve_client_ip" {
+//  description = "Whether client IP preservation is enabled."
+//  type = bool
+//  default = false
+//}
 
 variable "health_check" {
   description = "Target group health check parameters"
@@ -231,4 +231,16 @@ variable "listener_ssl_policy" {
   description = "The security policy if using HTTPS externally on the load balancer. [See](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-policy-table.html)."
   type        = string
   default     = "ELBSecurityPolicy-FS-1-2-Res-2020-10"
+}
+
+variable "http_tcp_listeners_enable" {
+  description = "Ability to enable/disable http listeners"
+  type = bool
+  default = true
+}
+
+variable "https_listeners_enable" {
+  description = "Ability to enable/disable https listeners"
+  type = bool
+  default = true
 }
