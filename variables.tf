@@ -155,3 +155,9 @@ variable "alb_custom_security_group_id" {
   description = "Security group ID that override default-created security group"
   default     = "None"
 }
+
+variable "listener_ssl_policy" {
+  description = "The security policy if using HTTPS externally on the load balancer. [See](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-policy-table.html)."
+  type        = string
+  default     = "ELBSecurityPolicy-FS-1-2-Res-2020-10"
+}
