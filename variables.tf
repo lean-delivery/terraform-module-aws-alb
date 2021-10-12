@@ -158,6 +158,6 @@ variable "alb_custom_security_group_id" {
 
 variable "listener_ssl_policy" {
   description = "The security policy if using HTTPS externally on the load balancer. [See](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-policy-table.html)."
-  type        = string
+//  type        = string
   default     = "ELBSecurityPolicy-FS-1-2-Res-2020-10"
 }
