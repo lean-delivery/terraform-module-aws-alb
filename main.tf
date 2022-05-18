@@ -1,9 +1,4 @@
 locals {
-  default_tags = {
-    Project     = var.project
-    Environment = var.environment
-  }
-
   subdomains = var.enable_subdomains ? "*." : ""
 }
 
@@ -36,8 +31,6 @@ resource "aws_security_group" "allow_in80_in443_outALL" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  tags = local.default_tags
 }
 
 resource "aws_s3_bucket" "alb-logs" {
@@ -45,8 +38,6 @@ resource "aws_s3_bucket" "alb-logs" {
   bucket        = "${var.project}-${var.environment}-alb-logs"
   acl           = "log-delivery-write"
   force_destroy = lower(var.environment) == "production" ? "false" : var.force_destroy
-
-  tags = local.default_tags
 
   lifecycle_rule {
     enabled = var.alb_logs_lifecycle_rule_enabled
@@ -161,7 +152,7 @@ module "alb" {
 
   logging_enabled = var.enable_logging
   log_bucket_name = element(concat(aws_s3_bucket.alb-logs.*.id, [""]), 0)
-  tags            = merge(local.default_tags, var.tags)
+  tags            = var.tags
 
   target_groups_defaults = var.target_groups_defaults
 }
